@@ -1,5 +1,5 @@
 #pragma once
-#include <libOTe/config.h>
+#include "libOTe/config.h"
 #ifdef ENABLE_MR_KYBER
 
 #include "libOTe/TwoChooseOne/OTExtInterface.h"

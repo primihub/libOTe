@@ -1,26 +1,26 @@
 #pragma once
-#include <libOTe/config.h>
+#include "libOTe/config.h"
 #ifdef ENABLE_SILENTOT
 
 #include <cryptoTools/Common/Defines.h>
 #include <cryptoTools/Crypto/PRNG.h>
 #include <cryptoTools/Network/Channel.h>
 #include <cryptoTools/Common/Timer.h>
-#include <libOTe/Tools/SilentPprf.h>
-#include <libOTe/TwoChooseOne/TcoOtDefines.h>
-#include <libOTe/TwoChooseOne/IknpOtExtSender.h>
-#include <libOTe/TwoChooseOne/KosOtExtSender.h>
-#include <libOTe/TwoChooseOne/KosOtExtReceiver.h>
-#include <libOTe/TwoChooseOne/OTExtInterface.h>
+#include "libOTe/Tools/SilentPprf.h"
+#include "libOTe/TwoChooseOne/TcoOtDefines.h"
+#include "libOTe/TwoChooseOne/IknpOtExtSender.h"
+#include "libOTe/TwoChooseOne/KosOtExtSender.h"
+#include "libOTe/TwoChooseOne/KosOtExtReceiver.h"
+#include "libOTe/TwoChooseOne/OTExtInterface.h"
 
 namespace osuCrypto
 {
 
     // Silent OT works a bit different than normal OT extension
     // This stems from that fact that is needs many base OTs which are
-    // of chosen message and chosen choice. Normal OT extension 
-    // requires about 128 random OTs. 
-    // 
+    // of chosen message and chosen choice. Normal OT extension
+    // requires about 128 random OTs.
+    //
     // This is further complicated by the fact that silent OT
     // naturally samples the choice bits at random while normal OT
     // lets you choose them. Due to this we give two interfaces.
@@ -30,34 +30,34 @@ namespace osuCrypto
     // and internally the implementation will transform these into
     // the required base OTs. You can also directly call send(...) or receive(...)
     // just as before and the receiver can specify the OT messages
-    // that they wish to receive. However, using this interface results 
+    // that they wish to receive. However, using this interface results
     // in slightly more communication and rounds than are strickly required.
     //
     // The second interface in the "native" silent OT interface.
     // The simplest way to use this interface is to call silentSend(...)
-    // and silentReceive(...). This internally will perform all of the 
+    // and silentReceive(...). This internally will perform all of the
     // base OTs and output the random OT messages and random OT
-    // choice bits. 
+    // choice bits.
     //
     // In particular, 128 base OTs will be performed using the DefaultBaseOT
     // protocol and then these will be extended using IKNP into ~400
     // chosen message OTs which silent OT will then expend into the
-    // final OTs. If desired, the caller can actually compute the 
+    // final OTs. If desired, the caller can actually compute the
     // base OTs manually. First they must call configure(...) and then
     // silentBaseOtCount() will return the desired number of base OTs.
     // On the receiver side they should use the choice bits returned
     // by sampleBaseChoiceBits(). The base OTs can then be passed back
     // using the setSilentBaseOts(...). silentSend(...) and silentReceive(...)
     // can then be called which results in one message being sent
-    // from the sender to the receiver. 
+    // from the sender to the receiver.
     //
-    // Also note that genSilentBaseOts(...) can be called which generates 
+    // Also note that genSilentBaseOts(...) can be called which generates
     // them. This has two behaviors. If the normal base OTs have previously
     // been set, i.e. the normal OT Ext interface, then and IKNP OT extension
     // is performed to generated the needed ~400 base OTs. If they have not
-    // been set then the ~400 base OTs are computed directly using the 
-    // DefaultBaseOT protocol. This is much more computationally expensive 
-    // but requires fewer rounds than IKNP. 
+    // been set then the ~400 base OTs are computed directly using the
+    // DefaultBaseOT protocol. This is much more computationally expensive
+    // but requires fewer rounds than IKNP.
     class SilentOtExtSender : public OtExtSender, public TimerAdapter
     {
     public:
@@ -71,16 +71,16 @@ namespace osuCrypto
 
         // The sparse vector size, this will be mN * mScaler.
         u64 mN2 = 0;
-        
+
         // The dense vector size, this will be at least as big as mRequestedNumOts.
         u64 mN = 0;
-        
+
         // The number of regular section of the sparse vector.
         u64 mNumPartitions = 0;
-        
+
         // The size of each regular section of the sparse vector.
         u64 mSizePer = 0;
-        
+
         // The scaling factor that the sparse vector will be compressed by.
         u64 mScaler = 2;
 
@@ -108,7 +108,7 @@ namespace osuCrypto
         // The flag which controls whether the malicious check is performed.
         SilentSecType mMalType = SilentSecType::SemiHonest;
 
-        // The OTs send msgs which will be used to create the 
+        // The OTs send msgs which will be used to create the
         // secret share of xa * delta as described in ferret.
         std::vector<std::array<block, 2>> mMalCheckOts;
 
@@ -169,7 +169,7 @@ namespace osuCrypto
             return mGen.hasBaseOts();
         }
 
-        // Generate the silent base OTs. If the Iknp 
+        // Generate the silent base OTs. If the Iknp
         // base OTs are set then we do an IKNP extend,
         // otherwise we perform a base OT protocol to
         // generate the needed OTs.
@@ -202,7 +202,7 @@ namespace osuCrypto
 
 
         // Runs the silent random OT protocol and outputs b.
-        // Then this will generate random OTs, where c is a random 
+        // Then this will generate random OTs, where c is a random
         // bit vector and a[i] = b[i][c[i]].
         // @ b   [out] - the random ot message.
         // @prng  [in] - randomness source.
@@ -227,8 +227,8 @@ namespace osuCrypto
 			Channel& chl);
 
         // Runs the silent correlated OT protocol and store
-        // the b vector internally as mB. The protocol takes 
-        // as input the desired delta value. The outputs will 
+        // the b vector internally as mB. The protocol takes
+        // as input the desired delta value. The outputs will
         // have the relation:
         //     a[i] = b[i] + c[i] * delta.
         // @ d    [in] - the delta used in the correlated OT
@@ -244,7 +244,7 @@ namespace osuCrypto
         // internal functions
 
 
-        // Runs the malicious consistency check as described 
+        // Runs the malicious consistency check as described
         // by the ferret paper. We only run the batch check and
         // not the cuckoo hashing part.
         void ferretMalCheck(Channel& chl, PRNG& prng);

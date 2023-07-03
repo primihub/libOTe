@@ -1,5 +1,5 @@
 #pragma once
-#include <libOTe/config.h>
+#include "libOTe/config.h"
 #ifdef ENABLE_SILENTOT
 
 #include <cryptoTools/Common/Defines.h>
@@ -44,7 +44,7 @@ namespace osuCrypto
         std::vector<block> mValue;
         bool mPrint = false;
 
-        
+
         std::vector<block> mBuffer;
 
         Matrix<std::array<block, 2>> mBaseOTs;
@@ -57,13 +57,13 @@ namespace osuCrypto
 
         void configure(u64 domainSize, u64 pointCount);
 
-        
+
         // the number of base OTs that should be set.
         u64 baseOtCount() const;
 
         // returns true if the base OTs are currently set.
-        bool hasBaseOts() const; 
-        
+        bool hasBaseOts() const;
+
 
         void setBase(span<std::array<block, 2>> baseMessages);
 

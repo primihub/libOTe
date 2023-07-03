@@ -1,6 +1,6 @@
 #include "libOTe/TwoChooseOne/SilentOtExtSender.h"
 
-#if defined(ENABLE_SILENTOT) || defined(ENABLE_SILENT_VOLE) 
+#if defined(ENABLE_SILENTOT) || defined(ENABLE_SILENT_VOLE)
 
 namespace osuCrypto
 {
@@ -35,7 +35,7 @@ namespace osuCrypto
 
 #include "libOTe/Tools/Tools.h"
 #include "libOTe/TwoChooseOne/SilentOtExtReceiver.h"
-#include <libOTe/Tools/bitpolymul.h>
+#include "libOTe/Tools/bitpolymul.h"
 #include "cryptoTools/Common/Log.h"
 #include "cryptoTools/Common/ThreadBarrier.h"
 #include "libOTe/Base/BaseOT.h"
@@ -127,7 +127,7 @@ namespace osuCrypto
         mKosSender.mFiatShamir = true;
         mKosSender.send(msg, prng, chl);
 #else
-    // otherwise just generate the silent 
+    // otherwise just generate the silent
     // base OTs directly.
         DefaultBaseOT base;
         base.send(msg, prng, chl, mNumThreads);

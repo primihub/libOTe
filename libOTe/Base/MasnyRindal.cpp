@@ -12,7 +12,7 @@
 static_assert(0, "ENABLE_SODIUM or ENABLE_RELIC must be defined to build MasnyRindal");
 #endif
 
-#include <libOTe/Base/SimplestOT.h>
+#include "libOTe/Base/SimplestOT.h"
 
 namespace osuCrypto
 {

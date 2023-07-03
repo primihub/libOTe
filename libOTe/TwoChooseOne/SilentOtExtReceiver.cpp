@@ -4,12 +4,12 @@
 #include <cryptoTools/Crypto/PRNG.h>
 #include <cryptoTools/Crypto/RandomOracle.h>
 #include <cryptoTools/Common/Log.h>
-#include <libOTe/Tools/bitpolymul.h>
-#include <libOTe/Base/BaseOT.h>
+#include "libOTe/Tools/bitpolymul.h"
+#include "libOTe/Base/BaseOT.h"
 #include <cryptoTools/Common/ThreadBarrier.h>
 
-#include <libOTe/Vole/NoisyVoleSender.h>
-//#include <bits/stdc++.h> 
+#include "libOTe/Vole/NoisyVoleSender.h"
+//#include <bits/stdc++.h>
 
 namespace osuCrypto
 {
@@ -150,7 +150,7 @@ namespace osuCrypto
         mKosRecver.mFiatShamir = true;
         mKosRecver.receive(choice, msg, prng, chl);
 #else
-    // otherwise just generate the silent 
+    // otherwise just generate the silent
     // base OTs directly.
         DefaultBaseOT base;
         base.receive(choice, msg, prng, chl, mNumThreads);
@@ -168,8 +168,8 @@ namespace osuCrypto
     {
         if (isConfigured() == false)
             throw std::runtime_error("configure must be called first");
-        return 
-            mGen.baseOtCount() + 
+        return
+            mGen.baseOtCount() +
             (mMalType == SilentSecType::Malicious) * 128;
     }
 
@@ -219,7 +219,7 @@ namespace osuCrypto
     //    v_i = w_i + u_i * x
     //
     //    ------------------------ -
-    //    u' =   0000001000000000001000000000100000...00000,   u_i = 1 iff i \in S 
+    //    u' =   0000001000000000001000000000100000...00000,   u_i = 1 iff i \in S
     //
     //    v' = r + (x . u') = DPF(k0)
     //       = r + (000000x00000000000x000000000x00000...00000)
