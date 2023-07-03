@@ -3,10 +3,10 @@
 #include "libOTe/Tools/SilentPprf.h"
 #include "libOTe/TwoChooseOne/SilentOtExtSender.h"
 #include "libOTe/TwoChooseOne/SilentOtExtReceiver.h"
-#include <cryptoTools/Common/Log.h>
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Network/IOService.h>
-#include <cryptoTools/Common/TestCollection.h>
+#include "cryptoTools/Common/Log.h"
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Network/IOService.h"
+#include "cryptoTools/Common/TestCollection.h"
 
 using namespace oc;
 namespace osuCrypto

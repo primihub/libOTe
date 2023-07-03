@@ -3,9 +3,9 @@
 #include "libOTe/TwoChooseOne/OTExtInterface.h"
 
 #include "libOTe/Tools/Tools.h"
-#include <cryptoTools/Network/Channel.h>
-#include <cryptoTools/Network/Session.h>
-#include <cryptoTools/Network/IOService.h>
+#include "cryptoTools/Network/Channel.h"
+#include "cryptoTools/Network/Session.h"
+#include "cryptoTools/Network/IOService.h"
 
 #include "libOTe/Base/BaseOT.h"
 #include "libOTe/Base/SimplestOT.h"
@@ -22,13 +22,13 @@
 
 #include "libOTe/Base/MasnyRindal.h"
 #include "libOTe/Base/MasnyRindalKyber.h"
-#include <cryptoTools/Common/Log.h>
+#include "cryptoTools/Common/Log.h"
 
 #include "Common.h"
 #include <thread>
 #include <vector>
-#include <cryptoTools/Common/TestCollection.h>
-#include <cryptoTools/Common/BitVector.h>
+#include "cryptoTools/Common/TestCollection.h"
+#include "cryptoTools/Common/BitVector.h"
 #include "BaseOT_Tests.h"
 
 #ifdef GetMessage
@@ -186,7 +186,7 @@ namespace tests_libOTe
     {
         Bot_PopfOT_Test_impl<details::McRosRoyTwist, DomainSepEKEPopf>();
     }
-#else 
+#else
     void Bot_McQuoidRR_Moeller_EKE_Test()
     {
         throw UnitTestSkipped("McQuoid Rosulek Roy not enabled (ENABLE_MRR_TWIST, ENABLE_SSE). Requires libsodium and SSE.");
@@ -209,7 +209,7 @@ namespace tests_libOTe
     {
         Bot_PopfOT_Test_impl<details::McRosRoyTwist, DomainSepFeistelMulPopf>();
     }
-#else 
+#else
     void Bot_McQuoidRR_Moeller_MR_Test()
     {
         throw UnitTestSkipped("McQuoid Rosulek Roy not enabled (ENABLE_MRR_TWIST). Requires libsodium.");

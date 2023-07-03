@@ -1,16 +1,16 @@
 #include "Tools.h"
-#include <cryptoTools/Common/Defines.h>
-#include <cryptoTools/Common/MatrixView.h>
+#include "cryptoTools/Common/Defines.h"
+#include "cryptoTools/Common/MatrixView.h"
 #ifdef _MSC_VER
 #include <x86intrin.h>
 #endif
 
 #ifdef OC_ENABLE_SSE2
 #include <wmmintrin.h>
-#endif 
+#endif
 
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Common/Log.h>
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Common/Log.h"
 #include "libOTe/Tools/Tools.h"
 using std::array;
 
@@ -21,48 +21,48 @@ namespace osuCrypto {
 
 //using namespace std;
 
-// Utility function to do modular exponentiation. 
-// It returns (x^y) % p 
+// Utility function to do modular exponentiation.
+// It returns (x^y) % p
     u64 power(u64 x, u64 y, u64 p)
     {
-        u64 res = 1;      // Initialize result 
-        x = x % p;  // Update x if it is more than or 
-                    // equal to p 
+        u64 res = 1;      // Initialize result
+        x = x % p;  // Update x if it is more than or
+                    // equal to p
         while (y > 0)
         {
-            // If y is odd, multiply x with result 
+            // If y is odd, multiply x with result
             if (y & 1)
                 res = (res * x) % p;
 
-            // y must be even now 
-            y = y >> 1; // y = y/2 
+            // y must be even now
+            y = y >> 1; // y = y/2
             x = (x * x) % p;
         }
         return res;
     }
 
-    // This function is called for all k trials. It returns 
-    // false if n is composite and returns false if n is 
-    // probably prime. 
-    // d is an odd number such that  d*2<sup>r</sup> = n-1 
-    // for some r >= 1 
+    // This function is called for all k trials. It returns
+    // false if n is composite and returns false if n is
+    // probably prime.
+    // d is an odd number such that  d*2<sup>r</sup> = n-1
+    // for some r >= 1
     bool millerTest(u64 d, PRNG& prng, u64 n)
     {
-        // Pick a random number in [2..n-2] 
-        // Corner cases make sure that n > 4 
+        // Pick a random number in [2..n-2]
+        // Corner cases make sure that n > 4
         u64 a = 2 + prng.get<u64>() % (n - 4);
 
-        // Compute a^d % n 
+        // Compute a^d % n
         u64 x = power(a, d, n);
 
         if (x == 1 || x == n - 1)
             return true;
 
-        // Keep squaring x while one of the following doesn't 
-        // happen 
-        // (i)   d does not reach n-1 
-        // (ii)  (x^2) % n is not 1 
-        // (iii) (x^2) % n is not n-1 
+        // Keep squaring x while one of the following doesn't
+        // happen
+        // (i)   d does not reach n-1
+        // (ii)  (x^2) % n is not 1
+        // (iii) (x^2) % n is not n-1
         while (d != n - 1)
         {
             x = (x * x) % n;
@@ -72,25 +72,25 @@ namespace osuCrypto {
             if (x == n - 1) return true;
         }
 
-        // Return composite 
+        // Return composite
         return false;
     }
 
-    // It returns false if n is composite and returns true if n 
-    // is probably prime.  k is an input parameter that determines 
-    // accuracy level. Higher value of k indicates more accuracy. 
+    // It returns false if n is composite and returns true if n
+    // is probably prime.  k is an input parameter that determines
+    // accuracy level. Higher value of k indicates more accuracy.
     bool isPrime(u64 n, PRNG& prng, u64 k)
     {
-        // Corner cases 
+        // Corner cases
         if (n <= 1 || n == 4)  return false;
         if (n <= 3) return true;
 
-        // Find r such that n = 2^d * r + 1 for some r >= 1 
+        // Find r such that n = 2^d * r + 1 for some r >= 1
         u64 d = n - 1;
         while (d % 2 == 0)
             d /= 2;
 
-        // Iterate given nber of 'k' times 
+        // Iterate given nber of 'k' times
         for (u64 i = 0; i < k; i++)
             if (!millerTest(d, prng, n))
                 return false;
@@ -296,7 +296,7 @@ namespace osuCrypto {
     //                  |                  |
     //                  |                  |
     //                   ------------------
-    //                    
+    //
     // note: u16OutView is a 16x16 bit matrix = 16 rows of 2 bytes each.
     //       u16OutView[0] stores the first column of 16 bytes,
     //       u16OutView[1] stores the second column of 16 bytes.
@@ -317,8 +317,8 @@ namespace osuCrypto {
 
 
 
-    // given a 16x16 sub square, place its transpose into u16OutView at 
-    // rows  16*h, ..., 16 *(h+1)  a byte  columns w, w+1. 
+    // given a 16x16 sub square, place its transpose into u16OutView at
+    // rows  16*h, ..., 16 *(h+1)  a byte  columns w, w+1.
     void sse_transposeSubSquare(array<block, 128>& out, array<block, 2>& in, u64 x, u64 y)
     {
         static_assert(sizeof(array<array<u16, 8>, 128>) == sizeof(array<block, 128>), "");
@@ -367,8 +367,8 @@ namespace osuCrypto {
         if (static_cast<int>(out.stride()) < (bitWidth + 7) / 8)
             throw std::runtime_error(LOCATION);
 
-        // we can handle the case that the output should be truncated, but 
-        // not the case that the input is too small. (simple call this function 
+        // we can handle the case that the output should be truncated, but
+        // not the case that the input is too small. (simple call this function
         // with a smaller out.bounds()[0], since thats "free" to do.)
         if (out.bounds()[0] > in.stride() * 8)
             throw std::runtime_error(LOCATION);
@@ -435,8 +435,8 @@ namespace osuCrypto {
                 auto src14 = start + step14;
                 auto src15 = start + step15;
 
-                // perform the transpose on the byte level. We will then use 
-                // sse instrucitions to get it on the bit level. t.bytes is the 
+                // perform the transpose on the byte level. We will then use
+                // sse instrucitions to get it on the bit level. t.bytes is the
                 // same as a but in a 2D byte view.
                 t.bytes[0][0] = src00[0]; t.bytes[1][0] = src00[1];  t.bytes[2][0] = src00[2]; t.bytes[3][0] = src00[3];   t.bytes[4][0] = src00[4];  t.bytes[5][0] = src00[5];  t.bytes[6][0] = src00[6]; t.bytes[7][0] = src00[7];
                 t.bytes[0][1] = src01[0]; t.bytes[1][1] = src01[1];  t.bytes[2][1] = src01[2]; t.bytes[3][1] = src01[3];   t.bytes[4][1] = src01[4];  t.bytes[5][1] = src01[5];  t.bytes[6][1] = src01[6]; t.bytes[7][1] = src01[7];
@@ -455,7 +455,7 @@ namespace osuCrypto {
                 t.bytes[0][14] = src14[0]; t.bytes[1][14] = src14[1];  t.bytes[2][14] = src14[2]; t.bytes[3][14] = src14[3];   t.bytes[4][14] = src14[4];  t.bytes[5][14] = src14[5];  t.bytes[6][14] = src14[6]; t.bytes[7][14] = src14[7];
                 t.bytes[0][15] = src15[0]; t.bytes[1][15] = src15[1];  t.bytes[2][15] = src15[2]; t.bytes[3][15] = src15[3];   t.bytes[4][15] = src15[4];  t.bytes[5][15] = src15[5];  t.bytes[6][15] = src15[6]; t.bytes[7][15] = src15[7];
 
-                // get pointers to the output. 
+                // get pointers to the output.
                 auto out0 = outStart + (chunkSize * h + 0) * eightOutSize1 + w * 2;
                 auto out1 = outStart + (chunkSize * h + 1) * eightOutSize1 + w * 2;
                 auto out2 = outStart + (chunkSize * h + 2) * eightOutSize1 + w * 2;
@@ -503,7 +503,7 @@ namespace osuCrypto {
         }
 
         // this is a special case there we dont have chunkSize bytes of input column left.
-        // because of this, the vectorized code above does not work and we instead so thing 
+        // because of this, the vectorized code above does not work and we instead so thing
         // one byte as a time.
 
         // hhEnd denotes how many bytes are left [0,8).
@@ -511,12 +511,12 @@ namespace osuCrypto {
 
         // the last byte might be only part of a byte, so we also account for this
         auto lastSkip = (8 - leftOverHeight % 8) % 8;
-        
+
         for (int hh = 0; hh < hhEnd; ++hh)
         {
             // compute those parameters that determine if this is the last byte
-            // and that its a partial byte meaning that the last so mant output 
-            // rows  should not be written to. 
+            // and that its a partial byte meaning that the last so mant output
+            // rows  should not be written to.
             auto skip = hh == (hhEnd - 1) ? lastSkip : 0;
             auto rem = 8 - skip;
 
@@ -559,8 +559,8 @@ namespace osuCrypto {
             }
         }
 
-        // this is a special case where the input column count was not a multiple of 16. 
-        // For this case, we use 
+        // this is a special case where the input column count was not a multiple of 16.
+        // For this case, we use
         if (leftOverWidth)
         {
             for (int h = 0; h < subBlockHight; ++h)
@@ -682,7 +682,7 @@ namespace osuCrypto {
                 };
 
 
-                t.blks[0] = ZeroBlock; 
+                t.blks[0] = ZeroBlock;
                 for (int i = 0; i < leftOverWidth; ++i)
                 {
                     t.bytes[0][i] = src[i][0];

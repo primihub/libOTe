@@ -2,9 +2,9 @@
 #include "libOTe/config.h"
 #if defined(ENABLE_MRR) || defined(ENABLE_MRR_TWIST)
 
-#include <cryptoTools/Common/Defines.h>
-#include <cryptoTools/Crypto/PRNG.h>
-#include <cryptoTools/Crypto/RandomOracle.h>
+#include "cryptoTools/Common/Defines.h"
+#include "cryptoTools/Crypto/PRNG.h"
+#include "cryptoTools/Crypto/RandomOracle.h"
 
 namespace osuCrypto
 {

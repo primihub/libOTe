@@ -1,17 +1,17 @@
 #include "MasnyRindalKyber.h"
 #ifdef ENABLE_MR_KYBER
 
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Crypto/PRNG.h>
-#include <cryptoTools/Network/Channel.h>
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Crypto/PRNG.h"
+#include "cryptoTools/Network/Channel.h"
 
 namespace osuCrypto
 {
 
     void MasnyRindalKyber::receive(
-        const BitVector & choices, 
-        span<block> messages, 
-        PRNG & prng, 
+        const BitVector & choices,
+        span<block> messages,
+        PRNG & prng,
         Channel & chl)
     {
         u64 n = choices.size();
@@ -47,8 +47,8 @@ namespace osuCrypto
     }
 
     void MasnyRindalKyber::send(
-        span<std::array<block, 2>> messages, 
-        PRNG & prng, 
+        span<std::array<block, 2>> messages,
+        PRNG & prng,
         Channel & chl)
     {
         u64 n = messages.size();

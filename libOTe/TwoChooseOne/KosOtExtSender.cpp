@@ -3,9 +3,9 @@
 //#define KOS_DEBUG
 #include "libOTe/config.h"
 #include "libOTe/Tools/Tools.h"
-#include <cryptoTools/Crypto/Commit.h>
-#include <cryptoTools/Network/Channel.h>
-#include <cryptoTools/Common/Timer.h>
+#include "cryptoTools/Crypto/Commit.h"
+#include "cryptoTools/Network/Channel.h"
+#include "cryptoTools/Common/Timer.h"
 #include "TcoOtDefines.h"
 
 namespace osuCrypto
@@ -109,7 +109,7 @@ namespace osuCrypto
 
 
         // The other party either need to commit
-        // to a random value or we will generate 
+        // to a random value or we will generate
         // it via Fiat Shamir.
         RandomOracle fs(sizeof(block));
 
@@ -291,8 +291,8 @@ namespace osuCrypto
 
     void KosOtExtSender::hash(
         span<std::array<block, 2>> messages,
-        Channel& chl, 
-        block seed, 
+        Channel& chl,
+        block seed,
         std::array<block, 128>& extraBlocks,
         block delta)
     {

@@ -1,9 +1,9 @@
 #include "IknpOtExtSender.h"
 #ifdef ENABLE_IKNP
 #include "libOTe/Tools/Tools.h"
-#include <cryptoTools/Common/Log.h>
-#include <cryptoTools/Crypto/Commit.h>
-#include <cryptoTools/Network/Channel.h>
+#include "cryptoTools/Common/Log.h"
+#include "cryptoTools/Crypto/Commit.h"
+#include "cryptoTools/Network/Channel.h"
 
 #include "TcoOtDefines.h"
 

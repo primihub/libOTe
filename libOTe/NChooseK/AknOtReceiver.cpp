@@ -1,8 +1,8 @@
 #include "AknOtReceiver.h"
 #ifdef ENABLE_AKN
-#include <cryptoTools/Common/Log.h>
-#include <cryptoTools/Common/Timer.h>
-#include <cryptoTools/Crypto/RandomOracle.h>
+#include "cryptoTools/Common/Log.h"
+#include "cryptoTools/Common/Timer.h"
+#include "cryptoTools/Crypto/RandomOracle.h"
 
 #include "libOTe/Base/BaseOT.h"
 //#include "libOTe/TwoChooseOne/LzKosOtExtReceiver.h"

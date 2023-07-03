@@ -4,7 +4,7 @@
 
 
 #include <stdint.h>
-#include <cryptoTools/Common/Defines.h>
+#include "cryptoTools/Common/Defines.h"
 #include <vector>
 #include <boost/align/aligned_allocator.hpp>
 #include "bitpolymul/bitpolymul.h"

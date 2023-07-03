@@ -4,11 +4,11 @@
 #include "libOTe/Tools/Tools.h"
 #include "libOTe/config.h"
 
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Common/Timer.h>
-#include <cryptoTools/Crypto/PRNG.h>
-#include <cryptoTools/Crypto/Commit.h>
-#include <cryptoTools/Network/Channel.h>
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Common/Timer.h"
+#include "cryptoTools/Crypto/PRNG.h"
+#include "cryptoTools/Crypto/Commit.h"
+#include "cryptoTools/Network/Channel.h"
 
 #include "TcoOtDefines.h"
 using namespace std;

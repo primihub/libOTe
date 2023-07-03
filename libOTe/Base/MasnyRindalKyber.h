@@ -1,10 +1,10 @@
 #pragma once
-#include <libOTe/config.h>
+#include "libOTe/config.h"
 #ifdef ENABLE_MR_KYBER
 
 #include "libOTe/TwoChooseOne/OTExtInterface.h"
-#include <cryptoTools/Common/Defines.h>
-#include <cryptoTools/Crypto/PRNG.h>
+#include "cryptoTools/Common/Defines.h"
+#include "cryptoTools/Crypto/PRNG.h"
 
 extern "C"
 {

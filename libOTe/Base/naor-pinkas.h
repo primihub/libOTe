@@ -2,8 +2,8 @@
 // This file and the associated implementation has been placed in the public domain, waiving all copyright. No restrictions are placed on its use.
 #include "libOTe/config.h"
 #include "libOTe/TwoChooseOne/OTExtInterface.h"
-#include <cryptoTools/Common/Defines.h>
-#include <cryptoTools/Crypto/PRNG.h>
+#include "cryptoTools/Common/Defines.h"
+#include "cryptoTools/Crypto/PRNG.h"
 
 #ifdef ENABLE_NP
 

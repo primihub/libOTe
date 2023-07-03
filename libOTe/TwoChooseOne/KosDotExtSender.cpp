@@ -2,10 +2,10 @@
 #ifdef ENABLE_DELTA_KOS
 
 #include "libOTe/Tools/Tools.h"
-#include <cryptoTools/Common/Matrix.h>
-#include <cryptoTools/Common/Timer.h>
-#include <cryptoTools/Crypto/Commit.h>
-#include <cryptoTools/Network/Channel.h>
+#include "cryptoTools/Common/Matrix.h"
+#include "cryptoTools/Common/Timer.h"
+#include "cryptoTools/Crypto/Commit.h"
+#include "cryptoTools/Network/Channel.h"
 #include "TcoOtDefines.h"
 
 
@@ -216,9 +216,9 @@ namespace osuCrypto
 
         //std::cout << IoStream::lock;
 		//std::array<block, 2> small{ delta[0], delta[1] };
-		
 
-		
+
+
 
 
         u64 xx = 0;

@@ -11,7 +11,7 @@
 #include "bitpolymul/btfy.h"
 #include "bitpolymul/encode.h"
 
-#include <cryptoTools/Common/Defines.h>
+#include "cryptoTools/Common/Defines.h"
 
 using namespace oc;
 using namespace bpm;

@@ -3,18 +3,18 @@
 //using namespace std;
 #include "tests_cryptoTools/UnitTests.h"
 #include "libOTe_Tests/UnitTests.h"
-#include <cryptoTools/Common/Defines.h>
+#include "cryptoTools/Common/Defines.h"
 
 using namespace osuCrypto;
 
 #include <string.h>
 #include <stdio.h>
 
-#include <cryptoTools/Network/Channel.h>
-#include <cryptoTools/Network/Session.h>
-#include <cryptoTools/Network/IOService.h>
+#include "cryptoTools/Network/Channel.h"
+#include "cryptoTools/Network/Session.h"
+#include "cryptoTools/Network/IOService.h"
 #include <numeric>
-#include <cryptoTools/Common/Timer.h>
+#include "cryptoTools/Common/Timer.h"
 
 #include <iomanip>
 #include "util.h"

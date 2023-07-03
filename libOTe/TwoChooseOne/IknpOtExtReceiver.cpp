@@ -2,11 +2,11 @@
 #ifdef ENABLE_IKNP
 
 #include "libOTe/Tools/Tools.h"
-#include <cryptoTools/Common/Log.h>
+#include "cryptoTools/Common/Log.h"
 
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Crypto/PRNG.h>
-#include <cryptoTools/Crypto/Commit.h>
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Crypto/PRNG.h"
+#include "cryptoTools/Crypto/Commit.h"
 #include "TcoOtDefines.h"
 
 using namespace std;
@@ -80,7 +80,7 @@ namespace osuCrypto
         choices2.resize(numBlocks * 128);
 
         auto choiceBlocks = choices2.getSpan<block>();
-        // this will be used as temporary buffers of 128 columns, 
+        // this will be used as temporary buffers of 128 columns,
         // each containing 1024 bits. Once transposed, they will be copied
         // into the T1, T0 buffers for long term storage.
         std::array<std::array<block, superBlkSize>, 128> t0;
@@ -93,16 +93,16 @@ namespace osuCrypto
         u64 step = std::min<u64>(numSuperBlocks, (u64)commStepSize);
         std::vector<block> uBuff(step * 128 * superBlkSize);
 
-        // get an array of blocks that we will fill. 
+        // get an array of blocks that we will fill.
         auto uIter = (block*)uBuff.data();
         auto uEnd = uIter + uBuff.size();
 
         // NOTE: We do not transpose a bit-matrix of size numCol * numCol.
-        //   Instead we break it down into smaller chunks. We do 128 columns 
-        //   times 8 * 128 rows at a time, where 8 = superBlkSize. This is done for  
-        //   performance reasons. The reason for 8 is that most CPUs have 8 AES vector  
+        //   Instead we break it down into smaller chunks. We do 128 columns
+        //   times 8 * 128 rows at a time, where 8 = superBlkSize. This is done for
+        //   performance reasons. The reason for 8 is that most CPUs have 8 AES vector
         //   lanes, and so its more efficient to encrypt (aka prng) 8 blocks at a time.
-        //   So that's what we do. 
+        //   So that's what we do.
         for (u64 superBlkIdx = 0; superBlkIdx < numSuperBlocks; ++superBlkIdx)
         {
 
@@ -116,7 +116,7 @@ namespace osuCrypto
             {
                 // generate the column indexed by colIdx. This is done with
                 // AES in counter mode acting as a PRNG. We don'tIter use the normal
-                // PRNG interface because that would result in a data copy when 
+                // PRNG interface because that would result in a data copy when
                 // we move it into the T0,T1 matrices. Instead we do it directly.
                 mGens[colIdx][0].mAes.ecbEncCounterMode(mGens[colIdx][0].mBlockIdx, superBlkSize, tIter);
                 mGens[colIdx][1].mAes.ecbEncCounterMode(mGens[colIdx][1].mBlockIdx, superBlkSize, uIter);
@@ -162,7 +162,7 @@ namespace osuCrypto
                 }
             }
 
-            // transpose our 128 columns of 1024 bits. We will have 1024 rows, 
+            // transpose our 128 columns of 1024 bits. We will have 1024 rows,
             // each 128 bits wide.
             transpose128x1024(t0);
 
@@ -177,7 +177,7 @@ namespace osuCrypto
 
             while (mIter != mEnd)
             {
-                while (mIter != mEnd && tIter < tEnd) 
+                while (mIter != mEnd && tIter < tEnd)
                 {
                     (*mIter) = *tIter;
 

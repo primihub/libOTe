@@ -1,8 +1,8 @@
 #include "OTExtInterface.h"
 #include "libOTe/Base/BaseOT.h"
-#include <cryptoTools/Common/BitVector.h>
+#include "cryptoTools/Common/BitVector.h"
 #include <vector>
-#include <cryptoTools/Network/Channel.h>
+#include "cryptoTools/Network/Channel.h"
 
 void osuCrypto::OtExtReceiver::genBaseOts(PRNG & prng, Channel & chl)
 {
@@ -45,9 +45,9 @@ void osuCrypto::OtExtSender::genBaseOts(OtReceiver& base, PRNG& prng, Channel& c
 
 
 void osuCrypto::OtReceiver::receiveChosen(
-    const BitVector & choices, 
+    const BitVector & choices,
     span<block> recvMessages,
-    PRNG & prng, 
+    PRNG & prng,
     Channel & chl)
 {
     receive(choices, recvMessages, prng, chl);
@@ -67,7 +67,7 @@ void osuCrypto::OtReceiver::receiveCorrelated(const BitVector& choices, span<blo
     std::vector<block> temp(recvMessages.size());
     chl.recv(temp.data(), temp.size());
     auto iter = choices.begin();
-    
+
     for (u64 i = 0; i < temp.size(); ++i)
     {
         recvMessages[i] = recvMessages[i] ^ (zeroAndAllOne[*iter] & temp[i]);
@@ -77,8 +77,8 @@ void osuCrypto::OtReceiver::receiveCorrelated(const BitVector& choices, span<blo
 }
 
 void osuCrypto::OtSender::sendChosen(
-    span<std::array<block, 2>> messages, 
-    PRNG & prng, 
+    span<std::array<block, 2>> messages,
+    PRNG & prng,
     Channel & chl)
 {
     std::vector<std::array<block, 2>> temp(messages.size());

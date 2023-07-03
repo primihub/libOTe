@@ -1,9 +1,9 @@
 #include "SilentPprf.h"
 #ifdef ENABLE_SILENTOT
 
-#include <cryptoTools/Common/Log.h>
-#include <cryptoTools/Crypto/RandomOracle.h>
-#include <libOTe/Tools/Tools.h>
+#include "cryptoTools/Common/Log.h"
+#include "cryptoTools/Crypto/RandomOracle.h"
+#include "libOTe/Tools/Tools.h"
 //#define DEBUG_PRINT_PPRF
 
 namespace osuCrypto
@@ -69,13 +69,13 @@ namespace osuCrypto
         memcpy(mBaseOTs.data(), baseMessages.data(), mBaseOTs.size() * sizeof(block));
     }
 
-    // This function copies the leaf values of the GGM tree 
-    // to the output location. There are two modes for this 
-    // funcation. If interleaved == false, then each tree is 
+    // This function copies the leaf values of the GGM tree
+    // to the output location. There are two modes for this
+    // funcation. If interleaved == false, then each tree is
     // copied to a different contiguous regious of the output.
-    // If interleaved == true, then trees are interleaved such that .... 
+    // If interleaved == true, then trees are interleaved such that ....
     // @lvl         - the GGM tree leafs.
-    // @output      - the location that the GGM leafs should be written to. 
+    // @output      - the location that the GGM leafs should be written to.
     // @numTrees    - How many trees there are in total.
     // @tIdx        - the index of the first tree.
     // @oFormat     - do we interleave the output?
@@ -96,11 +96,11 @@ namespace osuCrypto
             if (lvl.size() % 16)
                 throw RTE_LOC;
 
-            // 
+            //
             //auto rowsPer = 16;
-            //auto step = lvl.size() 
+            //auto step = lvl.size()
 
-            //auto sectionSize = 
+            //auto sectionSize =
 
             if (lvl.size() < 16)
                 throw RTE_LOC;
@@ -221,7 +221,7 @@ namespace osuCrypto
     void interleavedPoints(span<u64> points, u64 domain, PprfOutputFormat format)
     {
 
-        for (i64 i = 0; i < points.size(); ++i)
+        for (u64 i = 0; i < points.size(); ++i)
         {
             points[i] = interleavedPoint(points[i], i, points.size(), domain, format);
         }
@@ -230,7 +230,7 @@ namespace osuCrypto
     u64 getActivePath(const span<u8>& choiceBits)
     {
         u64 point = 0;
-        for (i64 i = 0; i < choiceBits.size(); ++i)
+        for (u64 i = 0; i < choiceBits.size(); ++i)
         {
             auto shift = choiceBits.size() - i - 1;
 
@@ -352,7 +352,7 @@ namespace osuCrypto
         span<block> value,
         PRNG& prng,
         MatrixView<block> output,
-        PprfOutputFormat oFormat, 
+        PprfOutputFormat oFormat,
         u64 numThreads)
     {
         setValue(value);
@@ -400,7 +400,7 @@ namespace osuCrypto
         }
 
 
-        // ss will hold the malicious check block. Will be 
+        // ss will hold the malicious check block. Will be
         // the ZeroBlock if semi-honest
         block seed = prng.get();
 
@@ -441,15 +441,15 @@ namespace osuCrypto
 
             // mySums will hold the left and right GGM tree sums
             // for each level. For example sums[0][i][5]  will
-            // hold the sum of the left children for level i of 
-            // the 5th tree. 
+            // hold the sum of the left children for level i of
+            // the 5th tree.
             std::array<std::vector<std::array<block, 8>>, 2>& sums = treeGrp.sums;
 
             auto dd = mDepth + (oFormat == PprfOutputFormat::Interleaved ? 0 : 1);
-            // tree will hold the full GGM tree. Note that there are 8 
-            // indepenendent trees that are being processed together. 
+            // tree will hold the full GGM tree. Note that there are 8
+            // indepenendent trees that are being processed together.
             // The trees are flattenned to that the children of j are
-            // located at 2*j  and 2*j+1. 
+            // located at 2*j  and 2*j+1.
             //std::vector<std::array<block, 8>> tree((1ull << (dd)));
             std::unique_ptr<block[]> uPtr(new block[8 * (1ull << (dd))]);
             span<std::array<block, 8>> tree((std::array<block, 8>*)uPtr.get(), 1ull << (dd));
@@ -458,9 +458,9 @@ namespace osuCrypto
             chl.asyncSendCopy(mValue);
 #endif
 
-            // Returns the i'th level of the current 8 trees. The 
+            // Returns the i'th level of the current 8 trees. The
             // children of node j on level i are located at 2*j and
-            // 2*j+1  on level i+1. 
+            // 2*j+1  on level i+1.
             auto getLevel = [&](u64 i, u64 g)
             {
 
@@ -494,7 +494,7 @@ namespace osuCrypto
             //};
 
             // This thread will process 8 trees at a time. It will interlace
-            // thich sets of trees are processed with the other threads. 
+            // thich sets of trees are processed with the other threads.
             for (u64 g = threadIdx * 8; g < mPntCount; g += 8 * numThreads)
             {
                 treeGrp.g = g;
@@ -541,7 +541,7 @@ namespace osuCrypto
                             // The sum that this child node belongs to.
                             auto& sum = sums[keep][d];
 
-                            // Each parent is expanded into the left and right children 
+                            // Each parent is expanded into the left and right children
                             // using a different AES fixed-key. Therefore our OWF is:
                             //
                             //    H(x) = (AES(k0, x) + x) || (AES(k1, x) + x);
@@ -557,7 +557,7 @@ namespace osuCrypto
                             child[6] = child[6] ^ parent[6];
                             child[7] = child[7] ^ parent[7];
 
-                            // Update the running sums for this level. We keep 
+                            // Update the running sums for this level. We keep
                             // a left and right totals for each level.
                             sum[0] = sum[0] ^ child[0];
                             sum[1] = sum[1] ^ child[1];
@@ -573,13 +573,13 @@ namespace osuCrypto
 
 
 #ifdef DEBUG_PRINT_PPRF
-                // If we are debugging, then send over the full tree 
+                // If we are debugging, then send over the full tree
                 // to make sure its correct on the other side.
                 chl.asyncSendCopy(tree);
 #endif
 
                 // For all but the last level, mask the sums with the
-                // OT strings and send them over. 
+                // OT strings and send them over.
                 for (u64 d = 0; d < mDepth - 1; ++d)
                 {
                     for (u64 j = 0; j < min; ++j)
@@ -590,18 +590,18 @@ namespace osuCrypto
                             std::cout << "c[" << g + j << "][" << d << "][0] " << sums[0][d][j] << " " << mBaseOTs[g + j][d][0] << std::endl;;
                             std::cout << "c[" << g + j << "][" << d << "][1] " << sums[1][d][j] << " " << mBaseOTs[g + j][d][1] << std::endl;;
                         }
-#endif													  
+#endif
                         sums[0][d][j] = sums[0][d][j] ^ mBaseOTs[g + j][d][0];
                         sums[1][d][j] = sums[1][d][j] ^ mBaseOTs[g + j][d][1];
                     }
                 }
 
-                // For the last level, we are going to do something special. 
-                // The other party is currently missing both leaf children of 
+                // For the last level, we are going to do something special.
+                // The other party is currently missing both leaf children of
                 // the active parent. Since this is the last level, we want
-                // the inactive child to just be the normal value but the 
+                // the inactive child to just be the normal value but the
                 // active child should be the correct value XOR the delta.
-                // This will be done by sending the sums and the sums plus 
+                // This will be done by sending the sums and the sums plus
                 // delta and ensure that they can only decrypt the correct ones.
                 auto d = mDepth - 1;
                 std::vector<std::array<block, 4>>& lastOts = treeGrp.lastOts;
@@ -609,7 +609,7 @@ namespace osuCrypto
                 for (u64 j = 0; j < min; ++j)
                 {
                     // Construct the sums where we will allow the delta (mValue)
-                    // to either be on the left child or right child depending 
+                    // to either be on the left child or right child depending
                     // on which has the active path.
                     lastOts[j][0] = sums[0][d][j];
                     lastOts[j][1] = sums[1][d][j] ^ mValue[g + j];
@@ -634,7 +634,7 @@ namespace osuCrypto
                         std::cout << "c[" << g + j << "][" << d << "][0] " << sums[0][d][j] << " " << mBaseOTs[g + j][d][0] << std::endl;;
                         std::cout << "c[" << g + j << "][" << d << "][1] " << sums[1][d][j] << " " << mBaseOTs[g + j][d][1] << std::endl;;
                     }
-#endif							
+#endif
 
                     // Add the OT masks to the sums and send them over.
                     lastOts[j][0] = lastOts[j][0] ^ masks[0];
@@ -657,11 +657,11 @@ namespace osuCrypto
                 //chl.asyncSend(std::move(lastOts));
                 gTimer.setTimePoint("send.expand_send");
 
-                // copy the last level to the output. If desired, this is 
-                // where the tranpose is performed. 
+                // copy the last level to the output. If desired, this is
+                // where the tranpose is performed.
                 auto lvl = getLevel(mDepth, g);
 
-                // s is a checksum that is used for malicous security. 
+                // s is a checksum that is used for malicous security.
                 copyOut(lvl, output, mPntCount, g, oFormat);
             }
         };
@@ -778,16 +778,16 @@ namespace osuCrypto
             std::array<std::array<block, 8>, 2> mySums;
 
             // A buffer for receiving the sums from the other party.
-            // These will be masked by the OT strings. 
+            // These will be masked by the OT strings.
             std::array<std::vector<std::array<block, 8>>, 2> theirSums;
             theirSums[0].resize(mDepth - 1);
             theirSums[1].resize(mDepth - 1);
 
             auto dd = mDepth + (oFormat == PprfOutputFormat::Interleaved ? 0 : 1);
-            // tree will hold the full GGM tree. Not that there are 8 
-            // indepenendent trees that are being processed together. 
+            // tree will hold the full GGM tree. Not that there are 8
+            // indepenendent trees that are being processed together.
             // The trees are flattenned to that the children of j are
-            // located at 2*j  and 2*j+1. 
+            // located at 2*j  and 2*j+1.
             //std::vector<std::array<block, 8>> tree(1ull << (dd));
             std::unique_ptr<block[]> uPtr(new block[8 * (1ull << (dd))]);
             span<std::array<block, 8>> tree((std::array<block, 8>*)uPtr.get(), 1ull << (dd));
@@ -797,7 +797,7 @@ namespace osuCrypto
             //std::vector<std::array<block, 8>> stack(mDepth);
 
 #ifdef DEBUG_PRINT_PPRF
-            // This will be the full tree and is sent by the reciever to help debug. 
+            // This will be the full tree and is sent by the reciever to help debug.
             std::vector<std::array<block, 8>> ftree(1ull << (mDepth + 1));
 
             // The delta value on the active path.
@@ -805,9 +805,9 @@ namespace osuCrypto
             chl.recv(mDebugValue);
 #endif
 
-            // Returns the i'th level of the current 8 trees. The 
+            // Returns the i'th level of the current 8 trees. The
             // children of node j on level i are located at 2*j and
-            // 2*j+1  on level i+1. 
+            // 2*j+1  on level i+1.
             auto getLevel = [&](u64 i, u64 g, bool f = false)
             {
                 auto size = (1ull << i), offset = (size - 1);
@@ -866,7 +866,7 @@ namespace osuCrypto
             // The number of real trees for this iteration.
             std::vector<std::array<block, 4>> lastOts(8);
             // This thread will process 8 trees at a time. It will interlace
-            // thich sets of trees are processed with the other threads. 
+            // thich sets of trees are processed with the other threads.
             for (u64 gg = threadIdx * 8; gg < mPntCount; gg += 8 * numThreads)
             {
 #ifdef DEBUG_PRINT_PPRF
@@ -916,15 +916,15 @@ namespace osuCrypto
                     printLevel(1);
 #endif
 
-                // For all other levels, expand the GGM tree and add in 
-                // the correction along the active path. 
+                // For all other levels, expand the GGM tree and add in
+                // the correction along the active path.
                 for (u64 d = 1; d < mDepth; ++d)
                 {
                     // The already constructed level. Only missing the
-                    // GGM tree node value along the active path. 
+                    // GGM tree node value along the active path.
                     auto level0 = getLevel(d, g);
 
-                    // The next level that we want to construct. 
+                    // The next level that we want to construct.
                     auto level1 = getLevel(d + 1, g);
 
                     // Zero out the previous sums.
@@ -956,7 +956,7 @@ namespace osuCrypto
                             // The child that we will write in this iteration.
                             auto& child = level1[childIdx];
 
-                            // Each parent is expanded into the left and right children 
+                            // Each parent is expanded into the left and right children
                             // using a different AES fixed-key. Therefore our OWF is:
                             //
                             //    H(x) = (AES(k0, x) + x) || (AES(k1, x) + x);
@@ -980,9 +980,9 @@ namespace osuCrypto
                                 if (eq(parent[i], ZeroBlock))
                                     child[i] = ZeroBlock;
 #endif
-                            // Update the running sums for this level. We keep 
+                            // Update the running sums for this level. We keep
                             // a left and right totals for each level. Note that
-                            // we are actually XOR in the incorrect value of the 
+                            // we are actually XOR in the incorrect value of the
                             // children of the active parent (assuming !DEBUG_PRINT_PPRF).
                             // This is ok since we will later XOR off these incorrect values.
                             auto& sum = mySums[keep];
@@ -1000,7 +1000,7 @@ namespace osuCrypto
                     // For everything but the last level we have to
                     // 1) fix our sums so they dont include the incorrect
                     //    values that are the children of the active parent
-                    // 2) Update the non-active child of the active parent. 
+                    // 2) Update the non-active child of the active parent.
                     if (d != mDepth - 1)
                     {
 
@@ -1054,10 +1054,10 @@ namespace osuCrypto
 
                 timer.setTimePoint("recv.expanded");
 
-                // Now processes the last level. This one is special 
-                // because we we must XOR in the correction value as 
-                // before but we must also fixed the child value for 
-                // the active child. To do this, we will receive 4 
+                // Now processes the last level. This one is special
+                // because we we must XOR in the correction value as
+                // before but we must also fixed the child value for
+                // the active child. To do this, we will receive 4
                 // values. Two for each case (left active or right active).
                 timer.setTimePoint("recv.recvLast");
 
@@ -1065,7 +1065,7 @@ namespace osuCrypto
                 auto d = mDepth - 1;
                 for (u64 j = 0; j < 8; ++j)
                 {
-                    // The index of the child on the active path. 
+                    // The index of the child on the active path.
                     auto activeChildIdx = points[j + g];
 
                     // The index of the other (inactive) child.
@@ -1099,11 +1099,11 @@ namespace osuCrypto
                     auto& activeChild = level[activeChildIdx][j];
 
                     // Fix the sums we computed previously to not include the
-                    // incorrect child values. 
+                    // incorrect child values.
                     auto inactiveSum = mySums[notAi][j] ^ inactiveChild;
                     auto activeSum = mySums[notAi ^ 1][j] ^ activeChild;
 
-                    // Update the inactive and active child to have to correct 
+                    // Update the inactive and active child to have to correct
                     // value by XORing their full sum with out partial sum, which
                     // gives us exactly the value we are missing.
                     inactiveChild = ot0 ^ inactiveSum;
@@ -1125,11 +1125,11 @@ namespace osuCrypto
 
                 timer.setTimePoint("recv.expandLast");
 
-                // copy the last level to the output. If desired, this is 
-                // where the tranpose is performed. 
+                // copy the last level to the output. If desired, this is
+                // where the tranpose is performed.
                 auto lvl = getLevel(mDepth, g);
 
-                // s is a checksum that is used for malicous security. 
+                // s is a checksum that is used for malicous security.
                 copyOut(lvl, output, mPntCount, g, oFormat);
             }
         };

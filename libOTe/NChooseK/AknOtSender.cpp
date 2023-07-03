@@ -2,9 +2,9 @@
 #ifdef ENABLE_AKN
 
 #include "libOTe/Base/BaseOT.h"
-#include <cryptoTools/Common/Log.h>
-#include <cryptoTools/Common/Timer.h>
-#include <cryptoTools/Crypto/RandomOracle.h>
+#include "cryptoTools/Common/Log.h"
+#include "cryptoTools/Common/Timer.h"
+#include "cryptoTools/Crypto/RandomOracle.h"
 
 namespace osuCrypto
 {
