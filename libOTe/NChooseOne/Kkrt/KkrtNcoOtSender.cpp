@@ -1,10 +1,10 @@
 #include "KkrtNcoOtSender.h"
 #ifdef ENABLE_KKRT
-#include <cryptoTools/Network/IOService.h>
+#include "cryptoTools/Network/IOService.h"
 #include "libOTe/Tools/Tools.h"
-#include <cryptoTools/Common/Log.h>
+#include "cryptoTools/Common/Log.h"
 #include "KkrtDefines.h"
-#include <cryptoTools/Crypto/RandomOracle.h>
+#include "cryptoTools/Crypto/RandomOracle.h"
 
 namespace osuCrypto
 {
@@ -57,7 +57,7 @@ namespace osuCrypto
             }
             raw.setBaseOts(base, mBaseChoiceBits);
         }
-#ifdef OC_NO_MOVE_ELISION 
+#ifdef OC_NO_MOVE_ELISION
         return std::move(raw);
 #else
         return raw;
@@ -222,7 +222,7 @@ namespace osuCrypto
 		code[2] = tVal[2] ^ t12;
 		code[3] = tVal[3] ^ t13;
 #else
-        
+
             for (u64 i = 0; i < KKRT_WIDTH; ++i)
             {
                 code[i] = code[i] ^ word;

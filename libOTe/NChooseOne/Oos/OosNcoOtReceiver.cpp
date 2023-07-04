@@ -3,11 +3,13 @@
 #include "OosNcoOtReceiver.h"
 #include "libOTe/Tools/Tools.h"
 #include "libOTe/Tools/bch511.h"
-#include <cryptoTools/Crypto/RandomOracle.h>
+#include "cryptoTools/Crypto/RandomOracle.h"
+#ifdef ENABLE_SSE
 #include  <mmintrin.h>
+#endif
 #include "OosDefines.h"
 
-#include <cryptoTools/Common/BitVector.h>
+#include "cryptoTools/Common/BitVector.h"
 using namespace std;
 
 namespace osuCrypto
@@ -38,7 +40,7 @@ namespace osuCrypto
 
         if (u64(baseRecvOts.size()) != u64(mGens.size()))
             throw std::runtime_error("rt error at " LOCATION);
-        
+
         for (u64 i = 0; i < mGens.size(); i++)
         {
             mGens[i][0].SetSeed(baseRecvOts[i][0]);
@@ -53,7 +55,7 @@ namespace osuCrypto
 
         if (mInputByteCount == 0)
             throw std::runtime_error("configure must be called first" LOCATION);
-        
+
         if (hasBaseOts() == false)
             genBaseOts(prng, chl);
 
@@ -194,7 +196,7 @@ namespace osuCrypto
             }
             raw.setUniformBaseOts(base);
         }
-#ifdef OC_NO_MOVE_ELISION 
+#ifdef OC_NO_MOVE_ELISION
         return std::move(raw);
 #else
         return raw;

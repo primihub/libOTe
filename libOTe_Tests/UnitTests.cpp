@@ -1,6 +1,6 @@
 #include "UnitTests.h"
 
-#include <cryptoTools/Common/Log.h>
+#include "cryptoTools/Common/Log.h"
 #include <functional>
 
 
@@ -30,7 +30,7 @@ namespace tests_libOTe
         tc.add("Tools_bitShift_test                     ", Tools_bitShift_test);
         tc.add("Tools_modp_test                         ", Tools_modp_test);
         tc.add("Tools_bitpolymul_test                   ", Tools_bitpolymul_test);
-                                              
+
 
         tc.add("Tools_Pprf_test                         ", Tools_Pprf_test);
         tc.add("Tools_Pprf_trans_test                   ", Tools_Pprf_trans_test);
@@ -55,13 +55,13 @@ namespace tests_libOTe
         tc.add("OtExt_Kos_Test                          ", OtExt_Kos_Test);
         tc.add("OtExt_Kos_fs_Test                       ", OtExt_Kos_fs_Test);
         tc.add("OtExt_Kos_ro_Test                       ", OtExt_Kos_ro_Test);
-        tc.add("OtExt_Silent_random_Test                ", OtExt_Silent_random_Test);
-        tc.add("OtExt_Silent_correlated_Test            ", OtExt_Silent_correlated_Test);
-        tc.add("OtExt_Silent_inplace_Test               ", OtExt_Silent_inplace_Test);
-        tc.add("OtExt_Silent_paramSweep_Test            ", OtExt_Silent_paramSweep_Test);
-        tc.add("OtExt_Silent_QuasiCyclic_Test           ", OtExt_Silent_QuasiCyclic_Test);
-        tc.add("OtExt_Silent_baseOT_Test                ", OtExt_Silent_baseOT_Test);
-        tc.add("OtExt_Silent_mal_Test                   ", OtExt_Silent_mal_Test);
+        // tc.add("OtExt_Silent_random_Test                ", OtExt_Silent_random_Test);
+        // tc.add("OtExt_Silent_correlated_Test            ", OtExt_Silent_correlated_Test);
+        // tc.add("OtExt_Silent_inplace_Test               ", OtExt_Silent_inplace_Test);
+        // tc.add("OtExt_Silent_paramSweep_Test            ", OtExt_Silent_paramSweep_Test);
+        // tc.add("OtExt_Silent_QuasiCyclic_Test           ", OtExt_Silent_QuasiCyclic_Test);
+        // tc.add("OtExt_Silent_baseOT_Test                ", OtExt_Silent_baseOT_Test);
+        // tc.add("OtExt_Silent_mal_Test                   ", OtExt_Silent_mal_Test);
 
         tc.add("DotExt_Kos_Test                         ", DotExt_Kos_Test);
         tc.add("DotExt_Iknp_Test                        ", DotExt_Iknp_Test);

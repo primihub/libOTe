@@ -1,8 +1,8 @@
 #include "Rr17NcoOtReceiver.h"
 #ifdef ENABLE_RR
 
-#include <cryptoTools/Network/Channel.h>
-#include <cryptoTools/Crypto/RandomOracle.h>
+#include "cryptoTools/Network/Channel.h"
+#include "cryptoTools/Crypto/RandomOracle.h"
 namespace osuCrypto
 {
 
@@ -30,7 +30,7 @@ namespace osuCrypto
         p->mEncodeSize = mEncodeSize;
         p->mKos = mKos.splitBase();
 
-#ifdef OC_NO_MOVE_ELISION 
+#ifdef OC_NO_MOVE_ELISION
         return std::move(ret);
 #else
         return ret;
@@ -85,17 +85,17 @@ namespace osuCrypto
         //std::cout << IoStream::unlock;
 
     }
-     
+
     void Rr17NcoOtReceiver::encode(
-        u64 otIdx, 
-        const void* choiceWord, 
+        u64 otIdx,
+        const void* choiceWord,
         void* dest,
         u64 destSize)
     {
 #ifndef NDEBUG
         if (mDebugEncodeFlags[otIdx])
             throw std::runtime_error(LOCATION);
-        
+
         mDebugEncodeFlags[otIdx] = 1;
 #endif
 
@@ -134,8 +134,8 @@ namespace osuCrypto
     }
 
     void Rr17NcoOtReceiver::configure(
-        bool maliciousSecure, 
-        u64 statSecParam, 
+        bool maliciousSecure,
+        u64 statSecParam,
         u64 inputBitCount)
     {
         if (maliciousSecure == false)

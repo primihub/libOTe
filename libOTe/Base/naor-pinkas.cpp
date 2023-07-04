@@ -1,10 +1,10 @@
 #include "naor-pinkas.h"
 
-#include <cryptoTools/Common/Log.h>
-#include <cryptoTools/Common/Timer.h>
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Crypto/RandomOracle.h>
-#include <cryptoTools/Network/Channel.h>
+#include "cryptoTools/Common/Log.h"
+#include "cryptoTools/Common/Timer.h"
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Crypto/RandomOracle.h"
+#include "cryptoTools/Network/Channel.h"
 #include "libOTe/Tools/DefaultCurve.h"
 
 #define PARALLEL

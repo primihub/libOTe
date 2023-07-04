@@ -1,14 +1,14 @@
 #include "AknOt_Tests.h"
-#include <cryptoTools/Common/Defines.h>
-#include <cryptoTools/Network/IOService.h>
-#include <cryptoTools/Network/Session.h>
-#include <cryptoTools/Common/Log.h>
+#include "cryptoTools/Common/Defines.h"
+#include "cryptoTools/Network/IOService.h"
+#include "cryptoTools/Network/Session.h"
+#include "cryptoTools/Common/Log.h"
 #include "libOTe/NChooseK/AknOtReceiver.h"
 #include "libOTe/NChooseK/AknOtSender.h"
 #include "libOTe/TwoChooseOne/KosOtExtReceiver.h"
 #include "libOTe/TwoChooseOne/KosOtExtSender.h"
 #include "Common.h"
-#include <cryptoTools/Common/TestCollection.h>
+#include "cryptoTools/Common/TestCollection.h"
 using namespace osuCrypto;
 #include "libOTe/Base/BaseOT.h"
 

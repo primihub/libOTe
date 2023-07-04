@@ -1,12 +1,12 @@
-#include <cryptoTools/Crypto/PRNG.h>
+#include "cryptoTools/Crypto/PRNG.h"
 
 
 #include "libOTe/Tools/bitpolymul.h"
 
 
-#include <cryptoTools/Common/CLP.h>
-#include <cryptoTools/Common/Timer.h>
-#include <cryptoTools/Common/TestCollection.h>
+#include "cryptoTools/Common/CLP.h"
+#include "cryptoTools/Common/Timer.h"
+#include "cryptoTools/Common/TestCollection.h"
 
 
 

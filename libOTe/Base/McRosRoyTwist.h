@@ -4,19 +4,19 @@
 
 #include <type_traits>
 #include "libOTe/TwoChooseOne/OTExtInterface.h"
-#include <cryptoTools/Common/Defines.h>
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Crypto/PRNG.h>
-#include <cryptoTools/Crypto/RCurve.h>
-#include <cryptoTools/Crypto/Rijndael256.h>
-#include <cryptoTools/Crypto/RandomOracle.h>
+#include "cryptoTools/Common/Defines.h"
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Crypto/PRNG.h"
+#include "cryptoTools/Crypto/RCurve.h"
+#include "cryptoTools/Crypto/Rijndael256.h"
+#include "cryptoTools/Crypto/RandomOracle.h"
 
 #include "libOTe/Tools/Popf/EKEPopf.h"
 #include "libOTe/Tools/Popf/FeistelMulPopf.h"
 #include "libOTe/Tools/Popf/FeistelPopf.h"
 #include "libOTe/Tools/Popf/MRPopf.h"
 
-#include <cryptoTools/Crypto/SodiumCurve.h>
+#include "cryptoTools/Crypto/SodiumCurve.h"
 #ifndef ENABLE_SODIUM
 static_assert(0, "ENABLE_SODIUM must be defined to build McRosRoyTwist");
 #endif
@@ -110,20 +110,20 @@ namespace osuCrypto
 	}
 	//DomainSepEKEPopf requires SSE
 #ifdef ENABLE_SSE
-	// The McQuoid Rosulek Roy OT protocol over the main and twisted curve 
+	// The McQuoid Rosulek Roy OT protocol over the main and twisted curve
 	// with the EKE Popf impl. See https://eprint.iacr.org/2021/682
 	using McRosRoyTwist = details::McRosRoyTwist<DomainSepEKEPopf>;
 #endif
 
-	// The McQuoid Rosulek Roy OT protocol over the main and twisted curve 
+	// The McQuoid Rosulek Roy OT protocol over the main and twisted curve
 	// with the Feistel Popf impl. See https://eprint.iacr.org/2021/682
 	using McRosRoyTwistFeistel = details::McRosRoyTwist<DomainSepFeistelPopf>;
 
-	// The McQuoid Rosulek Roy OT protocol over the main and twisted curve 
+	// The McQuoid Rosulek Roy OT protocol over the main and twisted curve
 	// with the streamlined Feistel Popf impl. See https://eprint.iacr.org/2021/682
 	using McRosRoyTwistMul = details::McRosRoyTwist<DomainSepFeistelMulPopf>;
 
-	// The McQuoid Rosulek Roy OT protocol over the main and twisted curve 
+	// The McQuoid Rosulek Roy OT protocol over the main and twisted curve
 	// with the Masney Rindal Popf impl. See https://eprint.iacr.org/2021/682
 	using McRosRoyTwistMR = details::McRosRoyTwist<DomainSepMRPopf>;
 
@@ -133,7 +133,7 @@ namespace osuCrypto
 
 
 	///////////////////////////////////////////////////////////////////////////////
-	/// impl 
+	/// impl
 	///////////////////////////////////////////////////////////////////////////////
 
 

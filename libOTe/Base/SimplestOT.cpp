@@ -1,9 +1,9 @@
 #include "SimplestOT.h"
 
 #include <tuple>
-#include <cryptoTools/Network/Channel.h>
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Crypto/RandomOracle.h>
+#include "cryptoTools/Network/Channel.h"
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Crypto/RandomOracle.h"
 
 #ifdef ENABLE_SIMPLESTOT
 

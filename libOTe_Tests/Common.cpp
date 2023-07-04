@@ -1,9 +1,9 @@
 //#include "stdafx.h"
 #include "Common.h"
-#include <cryptoTools/Common/Log.h>
+#include "cryptoTools/Common/Log.h"
 
 #include <fstream>
-#include <cassert> 
+#include <cassert>
 
 using namespace osuCrypto;
 
@@ -34,7 +34,7 @@ namespace tests_libOTe
 
         std::cout.rdbuf(file->rdbuf());
         std::cerr.rdbuf(file->rdbuf());
-        //Log::SetSink(*file); 
+        //Log::SetSink(*file);
     }
 
 }

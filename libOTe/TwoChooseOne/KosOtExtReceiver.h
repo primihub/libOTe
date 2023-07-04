@@ -1,11 +1,11 @@
 #pragma once
-// This file and the associated implementation has been placed in the public domain, waiving all copyright. No restrictions are placed on its use. 
+// This file and the associated implementation has been placed in the public domain, waiving all copyright. No restrictions are placed on its use.
 #include "libOTe/config.h"
 #ifdef ENABLE_KOS
 #include "libOTe/TwoChooseOne/OTExtInterface.h"
 #include <array>
-#include <cryptoTools/Crypto/PRNG.h>
-#include <cryptoTools/Common/Timer.h>
+#include "cryptoTools/Crypto/PRNG.h"
+#include "cryptoTools/Common/Timer.h"
 
 
 namespace osuCrypto
@@ -57,18 +57,18 @@ namespace osuCrypto
 
 
         // returns an independent instance of this extender which can securely be
-        // used concurrently to this current one. The base OTs for the new instance 
+        // used concurrently to this current one. The base OTs for the new instance
         // are derived from the orginial base OTs.
         KosOtExtReceiver splitBase();
 
         // returns an independent (type eased) instance of this extender which can securely be
-        // used concurrently to this current one. The base OTs for the new instance 
+        // used concurrently to this current one. The base OTs for the new instance
         // are derived from the orginial base OTs.
         std::unique_ptr<OtExtReceiver> split() override;
 
         // Performed the specicifed number of random OT extensions where the messages
         // receivers are indexed by the choices vector that is passed in. The received
-        // values written to the messages parameter. 
+        // values written to the messages parameter.
         void receive(
             const BitVector& choices,
             span<block> messages,

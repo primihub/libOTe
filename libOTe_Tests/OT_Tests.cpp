@@ -4,10 +4,10 @@
 #include "libOTe/Base/BaseOT.h"
 #include "libOTe/Tools/Tools.h"
 #include "libOTe/Tools/LinearCode.h"
-#include <cryptoTools/Network/Channel.h>
-#include <cryptoTools/Network/Session.h>
-#include <cryptoTools/Network/IOService.h>
-#include <cryptoTools/Common/Log.h>
+#include "cryptoTools/Network/Channel.h"
+#include "cryptoTools/Network/Session.h"
+#include "cryptoTools/Network/IOService.h"
+#include "cryptoTools/Common/Log.h"
 
 #include "libOTe/TwoChooseOne/IknpOtExtReceiver.h"
 #include "libOTe/TwoChooseOne/IknpOtExtSender.h"
@@ -27,8 +27,8 @@
 #include <thread>
 #include <vector>
 #include <random>
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Common/Matrix.h>
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Common/Matrix.h"
 
 #ifdef GetMessage
 #undef GetMessage

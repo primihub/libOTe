@@ -2,8 +2,8 @@
 #ifdef ENABLE_OOS
 #include "libOTe/Tools/Tools.h"
 #include "libOTe/Tools/bch511.h"
-#include <cryptoTools/Crypto/RandomOracle.h>
-#include <cryptoTools/Network/Channel.h>
+#include "cryptoTools/Crypto/RandomOracle.h"
+#include "cryptoTools/Network/Channel.h"
 #include "OosDefines.h"
 
 namespace osuCrypto

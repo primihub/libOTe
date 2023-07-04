@@ -34,6 +34,7 @@ namespace osuCrypto
         {}
 
         PointList(u64 r, u64 c, span<const Point> pp);
+        PointList(u64 r, u64 c, const std::vector<Point>& pp);
 
         u64 mRows, mCols;
         std::vector<Point> mPoints;
@@ -119,7 +120,7 @@ namespace osuCrypto
             init(rows, cols, points);
         }
 
-        // The row/column data is represented in a flat vector. 
+        // The row/column data is represented in a flat vector.
         std::vector<u64> mDataRow, mDataCol;
 
         // Each row is a reference into the flat vectors.
@@ -153,7 +154,7 @@ namespace osuCrypto
             return iter != mRows[i].end();
         }
 
-        // hash the matrix. will return the same value 
+        // hash the matrix. will return the same value
         // as hash for DenseMtx if they are equal.
         block hash() const;
 
@@ -190,8 +191,8 @@ namespace osuCrypto
         // vertically concatinate this matrix and the parameter.
         // this matrix will come first. The result is returned.
         SparseMtx vConcat(const SparseMtx& o) const;
-        
-        // returns the submatrix starting at (row, col) and of 
+
+        // returns the submatrix starting at (row, col) and of
         // the given size.
         SparseMtx subMatrix(u64 row, u64 col, u64 rowCount, u64 colCount) const;
 
@@ -265,11 +266,11 @@ namespace osuCrypto
     class DenseMtx
     {
     public:
-        // column major, which means we call mData.row(i) 
+        // column major, which means we call mData.row(i)
         // to get column i and vise versa.
         Matrix<block> mData;
 
-        // the number of rows. This will be 
+        // the number of rows. This will be
         // mData.cols() * 128 or a bit less.
         u64 mRows = 0;
 
@@ -344,7 +345,7 @@ namespace osuCrypto
             return mData[i];
         }
 
-        // return the "sparse vector" of the given column  c. 
+        // return the "sparse vector" of the given column  c.
         // The result is written to set.
         void colIndexSet(u64 c, std::vector<u64>& set)const;
 
@@ -458,7 +459,7 @@ namespace osuCrypto
     };
 
 
-    // A sparse matrix class thats design to have 
+    // A sparse matrix class thats design to have
     // effecient manipulation operations.
     struct DynSparseMtx
     {
@@ -487,7 +488,7 @@ namespace osuCrypto
 
         // returns the ith row.
         const VecSortSet& row(u64 i)const { return mRows[i]; }
-        
+
         // returns the ith column.
         const VecSortSet& col(u64 i)const { return mCols[i]; }
 
@@ -510,16 +511,22 @@ namespace osuCrypto
         void clearCol(u64 i);
 
         // add the given column to the end of the matrix.
-        void pushBackCol(const VecSortSet& col) { pushBackCol(span<const u64>(col.mData)); }
-        
+        void pushBackCol(const VecSortSet& col) {
+          pushBackCol(col.mData);
+          // pushBackCol(span<const u64>(col.mData));
+        }
+        void pushBackCol(const std::vector<u64>& col);
         // add the given column to the end of the matrix.
         void pushBackCol(span<const u64> col);
 
         // add the given row to the end of the matrix.
-        void pushBackRow(const VecSortSet& row) { pushBackRow(row.mData); }
+        void pushBackRow(const VecSortSet& row) {
+          pushBackRow(row.mData);
+        }
 
         // add the given row to the end of the matrix.
         void pushBackRow(span<const u64> row);
+        void pushBackRow(const std::vector<u64>& row);
 
         // add the row indexed by r1 to r0.
         void rowAdd(u64 r0, u64 r1);

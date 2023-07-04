@@ -15,6 +15,12 @@ namespace osuCrypto
             push_back(p);
     }
 
+    PointList::PointList(u64 r, u64 c, const std::vector<Point>& pp) : mRows(r), mCols(c) {
+      for (auto p : pp) {
+        push_back(p);
+      }
+    }
+
     void PointList::push_back(const Point& p)
     {
         if (p.mRow >= mRows)
@@ -38,7 +44,7 @@ namespace osuCrypto
         mPoints.push_back(p);
     }
 
-    // hash the matrix. will return the same value 
+    // hash the matrix. will return the same value
     // as hash for DenseMtx if they are equal.
     block SparseMtx::hash() const
     {
@@ -523,7 +529,7 @@ namespace osuCrypto
     {
         auto eq = rows() == X.rows() &&
             cols() == X.cols() &&
-            mDataCol.size() == X.mDataCol.size() && 
+            mDataCol.size() == X.mDataCol.size() &&
             mDataCol == X.mDataCol;
 
         if(eq)
@@ -1168,11 +1174,31 @@ namespace osuCrypto
             mRows[col[i]].insert(c);
         }
     }
+    void DynSparseMtx::pushBackCol(const std::vector<u64>& col) {
+        auto c = mCols.size();
+        mCols.emplace_back();
+        mCols.back().insert(col.begin(), col.end());
+
+        for (u64 i = 0; i < (u64)col.size(); ++i) {
+            mRows[col[i]].insert(c);
+        }
+    }
 
     // add the given row to the end of the matrix.
 
     void DynSparseMtx::pushBackRow(span<const u64> row)
     {
+        auto r = mRows.size();
+        mRows.emplace_back();
+        mRows.back().insert(row.begin(), row.end());
+
+        for (u64 i = 0; i < (u64)row.size(); ++i)
+        {
+            mCols[row[i]].insert(r);
+        }
+    }
+
+    void DynSparseMtx::pushBackRow(const std::vector<u64>& row) {
         auto r = mRows.size();
         mRows.emplace_back();
         mRows.back().insert(row.begin(), row.end());
@@ -1540,7 +1566,7 @@ namespace osuCrypto
 
     }
 
-    
+
 
 }
 

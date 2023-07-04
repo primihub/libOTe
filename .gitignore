@@ -7,7 +7,7 @@
 *.sln.docstates
 *.vs
 .vscode/
-
+bazel-*
 CMakeFiles/*
 */CMakeFiles/*
 *cmake_install.cmake
@@ -230,6 +230,5 @@ mpsi.VC*
 testout.txt
 online.txt
 offline.txt
-Makefile
 
 [path to project]/node_modules/

@@ -4,9 +4,9 @@
 #include "libOTe/TwoChooseOne/KosOtExtReceiver.h"
 #include "libOTe/TwoChooseOne/IknpOtExtSender.h"
 #include "libOTe/TwoChooseOne/IknpOtExtReceiver.h"
-#include <cryptoTools/Common/Matrix.h>
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Network/Channel.h>
+#include "cryptoTools/Common/Matrix.h"
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Network/Channel.h"
 
 void osuCrypto::NcoOtExtReceiver::genBaseOts(PRNG & prng, Channel & chl)
 {
@@ -57,7 +57,7 @@ void osuCrypto::NcoOtExtSender::genBaseOts(PRNG & prng, Channel & chl)
         return;
     }
 #endif
-    
+
 #ifdef ENABLE_KOS
     KosOtExtReceiver recver;
     recver.genBaseOts(prng, chl);
@@ -66,7 +66,7 @@ void osuCrypto::NcoOtExtSender::genBaseOts(PRNG & prng, Channel & chl)
     DefaultBaseOT base;
     base.receive(bv, msgs, prng, chl);
     setBaseOts(msgs, bv, chl);
-#else 
+#else
     throw std::runtime_error("The libOTe library does not have base OTs. Enable them to call this. " LOCATION);
 #endif
 
@@ -79,7 +79,7 @@ void osuCrypto::NcoOtExtSender::sendChosen(MatrixView<block> messages, PRNG & pr
 
     if (hasBaseOts() == false)
         throw std::runtime_error("call configure(...) and genBaseOts(...) first.");
-    
+
     init(messages.rows(), prng, chl);
     recvCorrection(chl);
 
@@ -104,20 +104,20 @@ void osuCrypto::NcoOtExtSender::sendChosen(MatrixView<block> messages, PRNG & pr
 }
 
 void osuCrypto::NcoOtExtReceiver::receiveChosen(
-    u64 numMsgsPerOT, 
-    span<block> messages, 
+    u64 numMsgsPerOT,
+    span<block> messages,
     span<u64> choices, PRNG & prng, Channel & chl)
 {
     if (hasBaseOts() == false)
         throw std::runtime_error("call configure(...) and genBaseOts(...) first.");
-    
+
     // must be at least 128 bits.
     std::array<u64, 2> choice{ 0,0 };
     auto& j = choice[0];
 
     init(messages.size(), prng, chl);
 
-    for (i64 i = 0; i < messages.size(); ++i)
+    for (u64 i = 0; i < messages.size(); ++i)
     {
         j = choices[i];
         encode(i, &j, &messages[i]);
@@ -130,7 +130,7 @@ void osuCrypto::NcoOtExtReceiver::receiveChosen(
 
     chl.recv(temp.data(), temp.size());
 
-    for (i64 i = 0; i < messages.size(); ++i)
+    for (u64 i = 0; i < messages.size(); ++i)
     {
         messages[i] = messages[i] ^ temp(i, choices[i]);
     }

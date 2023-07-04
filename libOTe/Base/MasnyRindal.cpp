@@ -2,17 +2,17 @@
 
 #ifdef ENABLE_MR
 
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Common/Log.h>
-#include <cryptoTools/Crypto/RandomOracle.h>
-#include <cryptoTools/Network/Channel.h>
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Common/Log.h"
+#include "cryptoTools/Crypto/RandomOracle.h"
+#include "cryptoTools/Network/Channel.h"
 #include "libOTe/Tools/DefaultCurve.h"
 
 #if !(defined(ENABLE_SODIUM) || defined(ENABLE_RELIC))
 static_assert(0, "ENABLE_SODIUM or ENABLE_RELIC must be defined to build MasnyRindal");
 #endif
 
-#include <libOTe/Base/SimplestOT.h>
+#include "libOTe/Base/SimplestOT.h"
 
 namespace osuCrypto
 {

@@ -4,11 +4,11 @@
 
 #include <type_traits>
 #include "libOTe/TwoChooseOne/OTExtInterface.h"
-#include <cryptoTools/Common/Defines.h>
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Crypto/PRNG.h>
-#include <cryptoTools/Crypto/RCurve.h>
-#include <cryptoTools/Crypto/RandomOracle.h>
+#include "cryptoTools/Common/Defines.h"
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Crypto/PRNG.h"
+#include "cryptoTools/Crypto/RCurve.h"
+#include "cryptoTools/Crypto/RandomOracle.h"
 
 #include "libOTe/Tools/Popf/FeistelRistPopf.h"
 #include "libOTe/Tools/Popf/FeistelMulRistPopf.h"
@@ -80,17 +80,17 @@ namespace osuCrypto
 
     }
 
-    // The McQuoid Rosulek Roy OT protocol over the main and twisted curve 
+    // The McQuoid Rosulek Roy OT protocol over the main and twisted curve
     // with the Feistel Popf impl. See https://eprint.iacr.org/2021/682
     using McRosRoy = details::McRosRoy<DomainSepFeistelRistPopf>;
 
-    // The McQuoid Rosulek Roy OT protocol over the main and twisted curve 
+    // The McQuoid Rosulek Roy OT protocol over the main and twisted curve
     // with the streamlined Feistel Popf impl. See https://eprint.iacr.org/2021/682
     using McRosRoyMul = details::McRosRoy<DomainSepFeistelMulRistPopf>;
 
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// impl 
+    /// impl
     ///////////////////////////////////////////////////////////////////////////////
 
     namespace details

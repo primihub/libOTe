@@ -4,11 +4,11 @@
 #include "libOTe/Tools/Tools.h"
 #include "libOTe/config.h"
 
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Common/Timer.h>
-#include <cryptoTools/Crypto/PRNG.h>
-#include <cryptoTools/Crypto/Commit.h>
-#include <cryptoTools/Network/Channel.h>
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Common/Timer.h"
+#include "cryptoTools/Crypto/PRNG.h"
+#include "cryptoTools/Crypto/Commit.h"
+#include "cryptoTools/Network/Channel.h"
 
 #include "TcoOtDefines.h"
 using namespace std;
@@ -121,7 +121,9 @@ namespace osuCrypto
         choices2.resize(numBlocks * 128);
 
         auto choiceBlocks = choices2.getSpan<block>();
-        *(--choiceBlocks.end()) = prng.get();
+        auto* last_block = choiceBlocks.end();
+        --last_block;
+        *last_block = prng.get();
 
         // this will be used as temporary buffers of 128 columns,
         // each containing 1024 bits. Once transposed, they will be copied

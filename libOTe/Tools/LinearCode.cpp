@@ -1,12 +1,12 @@
 #include "LinearCode.h"
 #include <fstream>
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Common/Log.h>
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Common/Log.h"
 #define BITSET
 #include <bitset>
 #include <iomanip>
 
-#include <cryptoTools/Common/MatrixView.h>
+#include "cryptoTools/Common/MatrixView.h"
 namespace osuCrypto
 {
     // must be a multiple of 8...
@@ -327,7 +327,7 @@ namespace osuCrypto
         //            c{ ZeroBlock ,ZeroBlock ,ZeroBlock ,ZeroBlock,ZeroBlock ,ZeroBlock ,ZeroBlock ,ZeroBlock };
         //
         //
-        //        // highlevel idea: For each byte of the input, we have preprocessed 
+        //        // highlevel idea: For each byte of the input, we have preprocessed
         //        // the corresponding partial code. That is, we have many sub-codes
         //        // each with input size 8. And these subcodes are precomputed
         //        // in a lookup table called mG8. Each sub-code takes up 256 * codeSize;
@@ -402,13 +402,13 @@ namespace osuCrypto
         //                    c[5] = c[5] ^ *g5;
         //                    c[6] = c[6] ^ *g6;
         //                    c[7] = c[7] ^ *g7;
-        //                }     
+        //                }
         //
         //                codeword[j] = ZeroBlock;
         //                for (u64 i = 0; i < 8; ++i)
         //                    codeword[j] = codeword[j] ^ c[i];
         //            }
-        //      
+        //
         //
         //
         //        }
@@ -432,7 +432,7 @@ namespace osuCrypto
     void LinearCode::encode(u8 * input, u8 * codeword)
     {
 
-        // highlevel idea: For each byte of the input, we have preprocessed 
+        // highlevel idea: For each byte of the input, we have preprocessed
         // the corresponding partial code. That is, we have many sub-codes
         // each with input size 8. And these subcodes are precomputed
         // in a lookup table called mG8. Each sub-code takes up 256 * codeSize;
@@ -717,7 +717,7 @@ namespace osuCrypto
         // The size of the bch 511 codewords in 128 bit units.
         const i32 codeSize = 4;
 
-        // The size of each preprocessed chunk. Each chunk 
+        // The size of each preprocessed chunk. Each chunk
         // is for 8 bits which leads to 2^8=256 preprocessed
         // codewords for each input byte.
         const i32 rowSize = 256 * codeSize;

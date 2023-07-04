@@ -1,16 +1,16 @@
 #pragma once
-#include <libOTe/config.h>
+#include "libOTe/config.h"
 #ifdef ENABLE_SILENTOT
 
-#include <cryptoTools/Common/Defines.h>
-#include <cryptoTools/Network/Channel.h>
-#include <cryptoTools/Common/Timer.h>
-#include <libOTe/Tools/Tools.h>
-#include <libOTe/Tools/SilentPprf.h>
-#include <libOTe/TwoChooseOne/TcoOtDefines.h>
-#include <libOTe/TwoChooseOne/OTExtInterface.h>
-#include <libOTe/TwoChooseOne/KosOtExtReceiver.h>
-#include <libOTe/TwoChooseOne/KosOtExtSender.h>
+#include "cryptoTools/Common/Defines.h"
+#include "cryptoTools/Network/Channel.h"
+#include "cryptoTools/Common/Timer.h"
+#include "libOTe/Tools/Tools.h"
+#include "libOTe/Tools/SilentPprf.h"
+#include "libOTe/TwoChooseOne/TcoOtDefines.h"
+#include "libOTe/TwoChooseOne/OTExtInterface.h"
+#include "libOTe/TwoChooseOne/KosOtExtReceiver.h"
+#include "libOTe/TwoChooseOne/KosOtExtSender.h"
 
 namespace osuCrypto
 {
@@ -69,11 +69,11 @@ namespace osuCrypto
         KosOtExtReceiver mKosRecver;
 #endif
 
-        // The OTs recv msgs which will be used to create the 
+        // The OTs recv msgs which will be used to create the
         // secret share of xa * delta as described in ferret.
         std::vector<block> mMalCheckOts;
 
-        // The OTs choice bits which will be used to create the 
+        // The OTs choice bits which will be used to create the
         // secret share of xa * delta as described in ferret.
         BitVector mMalCheckChoice;
 
@@ -127,12 +127,12 @@ namespace osuCrypto
         std::unique_ptr<OtExtReceiver> split() override;
 
 
-        // The default API for OT ext allows the 
+        // The default API for OT ext allows the
         // caller to choose the choice bits. But
         // silent OT picks the choice bits at random.
         // To meet the original API we add communication
-        // and correct the random choice bits to the 
-        // provided ones... Use silentReceive(...) for 
+        // and correct the random choice bits to the
+        // provided ones... Use silentReceive(...) for
         // the silent OT API.
         void receive(
             const BitVector& choices,
@@ -145,12 +145,12 @@ namespace osuCrypto
         /////////////////////////////////////////////////////
 
 
-        // Generate the silent base OTs. If the Iknp 
+        // Generate the silent base OTs. If the Iknp
         // base OTs are set then we do an IKNP extend,
         // otherwise we perform a base OT protocol to
         // generate the needed OTs.
         void genSilentBaseOts(PRNG& prng, Channel& chl);
-        
+
         // configure the silent OT extension. This sets
         // the parameters and figures out how many base OT
         // will be needed. These can then be ganerated for
@@ -160,8 +160,8 @@ namespace osuCrypto
         // @nThreads [in] - the number of threads.
         // @mal      [in] - whether the malicious check is performed.
         void configure(
-            u64 n, 
-            u64 scaler = 2, 
+            u64 n,
+            u64 scaler = 2,
             u64 nThreads = 1,
             SilentSecType mal = SilentSecType::SemiHonest);
 
@@ -187,7 +187,7 @@ namespace osuCrypto
         // If type == OTType::random, then this will generate
         // random OTs, where c is a random bit vector
         // and a[i] = H(b[i] + c[i] * delta).
-        // If type ==OTType::Correlated, then 
+        // If type ==OTType::Correlated, then
         // a[i] = b[i] + c[i] * delta.
         // @ c   [out] - the random choice bits.
         // @ a   [out] - the correlated/random ot message.
@@ -204,9 +204,9 @@ namespace osuCrypto
         // Runs the silent OT protocol and store the a,c
         // vectors internally as mA, mC. Hashing is not applied
         // and therefore we have mA + mB = mC * delta.
-        // If type = ChoiceBitPacking::True, then mC will not 
+        // If type = ChoiceBitPacking::True, then mC will not
         // be generated. Instead the least significant bit of mA
-        // will hold the choice bits. 
+        // will hold the choice bits.
         // @n     [in] - the number of OTs.
         // @prng  [in] - randomness source.
         // @chl   [in] - the comm channel
@@ -227,7 +227,7 @@ namespace osuCrypto
 
         // internal.
 
-        // Runs the malicious consistency check as described 
+        // Runs the malicious consistency check as described
         // by the ferret paper. We only run the batch check and
         // not the cuckoo hashing part.
         void ferretMalCheck(Channel& chl, PRNG& prng);

@@ -1,14 +1,14 @@
 #pragma once
 
 #include "libOTe/config.h"
-#include <cryptoTools/Common/Defines.h>
+#include "cryptoTools/Common/Defines.h"
 
 #if defined(ENABLE_SODIUM) || defined(ENABLE_RELIC)
 
 #if defined(ENABLE_SODIUM)
-#include <cryptoTools/Crypto/SodiumCurve.h>
+#include "cryptoTools/Crypto/SodiumCurve.h"
 #elif defined(ENABLE_RELIC)
-#include <cryptoTools/Crypto/RCurve.h>
+#include "cryptoTools/Crypto/RCurve.h"
 #endif
 
 namespace osuCrypto

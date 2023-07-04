@@ -3,12 +3,12 @@
 
 #include "libOTe/Tools/Tools.h"
 
-#include <cryptoTools/Common/BitVector.h>
-#include <cryptoTools/Common/Matrix.h>
-#include <cryptoTools/Common/Timer.h>
-#include <cryptoTools/Crypto/PRNG.h>
-#include <cryptoTools/Crypto/Commit.h>
-#include <cryptoTools/Network/Channel.h>
+#include "cryptoTools/Common/BitVector.h"
+#include "cryptoTools/Common/Matrix.h"
+#include "cryptoTools/Common/Timer.h"
+#include "cryptoTools/Crypto/PRNG.h"
+#include "cryptoTools/Crypto/Commit.h"
+#include "cryptoTools/Network/Channel.h"
 
 #include "TcoOtDefines.h"
 #include <queue>
@@ -76,7 +76,7 @@ namespace osuCrypto
             genBaseOts(prng, chl);
 
         setTimePoint("KosDot.recv.start");
-        
+
         // we are going to process OTs in blocks of 128 * superBlkSize messages.
         u64 numOtExt = roundUpTo(choices.size(), 128);
         u64 numSuperBlocks = (numOtExt / 128 + superBlkSize) / superBlkSize;
